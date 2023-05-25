@@ -1,9 +1,10 @@
 package ch.web.web_shop.repository;
 
+import ch.web.web_shop.model.Newsletter;
 import org.springframework.data.repository.CrudRepository;
 
-import ch.web.web_shop.model.Newslatter;
 
-public interface NewsletterRepository extends CrudRepository<Newslatter, Long> {
+
+public interface NewsletterRepository extends CrudRepository<Newsletter, Long> {
 
 }
