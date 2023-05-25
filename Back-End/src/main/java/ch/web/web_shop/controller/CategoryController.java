@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.web.web_shop.model.Category;
-import ch.web.web_shop.repository.CategoryRepository;
+import ch.web.web_shop.service.CategoryService;
 
 /**
  * Category controller class.
@@ -21,9 +21,32 @@ import ch.web.web_shop.repository.CategoryRepository;
  * will process requests whose URI begins with "/api/category".
  * Handles HTTP methods such as GET, POST, etc. using appropriate mapping annotations.
  * Manages and provides access to Category objects.
- * Uses CategoryRepository to retrieve and manipulate data.
+ * Uses CategoryService to retrieve and manipulate data.
  *
- * @author Sy Viet
+ * Note: Make sure to inject the CategoryService dependency in this controller.
+ *
+ * Example:
+ *
+ * @Autowired
+ * private CategoryService categoryService;
+ *
+ * And use categoryService.getAllCategories() to retrieve categories.
+ *
+ * Alternatively, you can use constructor injection instead of field injection.
+ *
+ * Example:
+ *
+ * private final CategoryService categoryService;
+ *
+ * @Autowired
+ * public CategoryController(CategoryService categoryService) {
+ *     this.categoryService = categoryService;
+ * }
+ *
+ * This approach is recommended for better testability and maintainability.
+ *
+ * Update the code accordingly based on your preference.
+ *
  * @version 1.0
  * @see Category
  */
@@ -31,8 +54,12 @@ import ch.web.web_shop.repository.CategoryRepository;
 @RestController
 @RequestMapping("/api/category")
 public class CategoryController {
+	private final CategoryService categoryService;
+
 	@Autowired
-	private CategoryRepository categoryRepository;
+	public CategoryController(CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
 
 	/**
 	 * Retrieves all categories.
@@ -43,7 +70,7 @@ public class CategoryController {
 	@GetMapping("")
 	public ResponseEntity<Iterable<Category>> getAllCategories() {
 		try {
-			Iterable<Category> categories = categoryRepository.findAll();
+			Iterable<Category> categories = categoryService.getAllCategories();
 			return ResponseEntity.ok(categories);
 		} catch (DataAccessException ex) {
 			// Handle specific data access exception, such as DataAccessException, DataAccessResourceFailureException, etc.
