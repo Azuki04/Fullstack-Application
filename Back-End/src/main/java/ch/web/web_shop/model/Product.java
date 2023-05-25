@@ -15,8 +15,8 @@ public class Product {
 	private long id;
 
 	@Column(name = "title")
-	@NotEmpty(message = "Titel is mandatory")
-	@NotNull(message = "Titel cannot be null")
+	@NotEmpty(message = "Title is mandatory")
+	@NotNull(message = "Title cannot be null")
 	private String title;
 
 	@Column(name = "description")
@@ -28,12 +28,12 @@ public class Product {
 	private String content;
 
 	@Column(name = "price")
-	@Min(value = 0, message = "Age should not be less than 0")
-	@NotNull(message = "price cannot be null")
+	@Min(value = 0, message = "Price should not be less than 0")
+	@NotNull(message = "Price cannot be null")
 	private int price;
 
 	@Column(name = "stock")
-	@Min(value = 1, message = "Age should not be less than 1")
+	@Min(value = 1, message = "Stock should not be less than 1")
 	@NotNull(message = "Stock cannot be null")
 	private int stock;
 
@@ -49,11 +49,11 @@ public class Product {
 	private Category category;
 
 	public Product() {
-
+		// Default constructor required by JPA
 	}
 
 	public Product(String title, String description, String content, int price, int stock, String src,
-			boolean published, Category category) {
+				   boolean published, Category category) {
 		this.title = title;
 		this.description = description;
 		this.content = content;
@@ -88,12 +88,12 @@ public class Product {
 		this.description = description;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
-	}
-
 	public String getContent() {
 		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public int getPrice() {
@@ -124,21 +124,20 @@ public class Product {
 		return published;
 	}
 
-	public void setPublished(boolean isPublished) {
-		this.published = isPublished;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setPublished(boolean published) {
+		this.published = published;
 	}
 
 	public Category getCategory() {
 		return category;
 	}
 
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", title=" + title + ", desc=" + description + ", published=" + published + "]";
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", title=" + title + ", description=" + description + ", published=" + published + "]";
+	}
 }
