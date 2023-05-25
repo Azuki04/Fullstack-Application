@@ -20,46 +20,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import ch.web.web_shop.exception.ProductCouldNotBeSavedException;
 import ch.web.web_shop.exception.ProductLoadException;
-
 import ch.web.web_shop.model.Product;
 import ch.web.web_shop.repository.ProductRepository;
 
 /**
- * Product page controller class.
- * This controller and related pages can be accessed by all users, regardless of
- * their roles. However, I currently have no login yet
- * This class is a mainClass and must be loaded when the application starts.
+ * Product controller class.
+ * This controller manages product-related operations.
+ * The @RestController annotation combines the @Controller and @ResponseBody annotations,
+ * simplifying the code and eliminating the need for individual @ResponseBody annotations.
  * The @RequestMapping("/api/products") annotation informs that this controller
  * will process requests whose URI begins with "/api/products".
+ * Handles HTTP methods such as GET, POST, etc. using appropriate mapping annotations.
+ * Manages and provides access to Product objects.
  *
  * @author Sy Viet
  * @version 3.0
- * @see Products
+ * @see Product
  */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/products")
-
 public class ProductController {
 
 	@Autowired
-	ProductRepository productRepository;
+	private ProductRepository productRepository;
 
 	/**
-	 * @author Sy Viet Dao
-	 *         get all product from web_shop.
-	 *         URL request {"/api/products"}, method get.
+	 * Retrieves all products.
 	 *
-	 * @param title to find the product with a title.
-	 * @return ResponseEntity: products.
+	 * @param title The title parameter to filter products by title (optional).
+	 * @return ResponseEntity with a list of products if successful,
+	 *         or an error response if an exception occurs.
 	 */
 	@GetMapping("")
 	public ResponseEntity<List<Product>> getAllProducts(@RequestParam(required = false) String title) {
-		List<Product> products = new ArrayList<Product>();
 		try {
+			List<Product> products = new ArrayList<>();
 
 			if (title == null) {
 				productRepository.findAll().forEach(products::add);
@@ -68,22 +66,21 @@ public class ProductController {
 			}
 
 			if (products.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				return ResponseEntity.noContent().build();
 			}
+
+			return ResponseEntity.ok(products);
 		} catch (Exception ex) {
 			throw new ProductLoadException();
 		}
-		
-		return ResponseEntity.ok(products);
 	}
 
 	/**
-	 * @author Sy Viet Dao
-	 *         get productDetail with specific id from web_shop.
-	 *         URL request {"/api/products/{id}, method get.
+	 * Retrieves a specific product by its ID.
 	 *
-	 * @param id from the product to show the details.
-	 * @return ResponseEntity: productDetail.
+	 * @param id The ID of the product to retrieve.
+	 * @return ResponseEntity with the product if found,
+	 *         or a not found response if the product does not exist.
 	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<Product> getProductById(@PathVariable("id") long id) {
@@ -92,101 +89,106 @@ public class ProductController {
 		if (productData.isPresent()) {
 			return ResponseEntity.ok(productData.get());
 		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 
 	/**
-	 * @author Sy Viet Dao
-	 *         create product from web_shop.
-	 *         URL request {"/api/products"}, method POST.
+	 * Creates a new product.
 	 *
-	 * @param product the product is created and stored in MySQL.
-	 * @return ResponseEntity: product.
+	 * @param product The product to create.
+	 * @return ResponseEntity with the created product if successful,
+	 *         or an error response if the product could not be saved.
 	 */
 	@PostMapping("")
 	public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
 		try {
-			Product productCreate = productRepository
-					.save(new Product(product.getTitle(), product.getDescription(), product.getContent(),
-							product.getPrice(), product.getStock(), product.getSrc(), false, product.getCategory()));
-			return ResponseEntity.ok(productCreate);
+			Product createdProduct = productRepository.save(product);
+			return ResponseEntity.ok(createdProduct);
 		} catch (Exception ex) {
 			throw new ProductCouldNotBeSavedException(product.getTitle());
 		}
 	}
 
 	/**
-	 * Update product from web_shop.
-	 * URL request {"/api/products/{id}"}, method PUT.
+	 * Updates a specific product.
 	 *
-	 * @param product the product to be removed from the user shopping cart.
+	 * @param id      The ID of the product to update.
+	 * @param product The updated product data.
+	 * @return ResponseEntity with the updated product if successful,
+	 *         or a not found response if the product does not exist.
 	 */
-
 	@PutMapping("/{id}")
 	public ResponseEntity<Product> updateProduct(@PathVariable("id") long id, @RequestBody Product product) {
 		Optional<Product> productData = productRepository.findById(id);
 
 		if (productData.isPresent()) {
-			Product _product = productData.get();
-			_product.setTitle(product.getTitle());
-			_product.setDescription(product.getDescription());
-			_product.setPrice(product.getPrice());
-			_product.setStock(product.getStock());
-			_product.setContent(product.getContent());
-			_product.setPublished(product.isPublished());
-			return ResponseEntity.ok(productRepository.save(_product));
+			Product existingProduct = productData.get();
+			existingProduct.setTitle(product.getTitle());
+			existingProduct.setDescription(product.getDescription());
+			existingProduct.setPrice(product.getPrice());
+			existingProduct.setStock(product.getStock());
+			existingProduct.setContent(product.getContent());
+			existingProduct.setPublished(product.isPublished());
+
+			Product updatedProduct = productRepository.save(existingProduct);
+			return ResponseEntity.ok(updatedProduct);
 		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 
 	/**
-	 * Remove one product from web_shop.
-	 * URL request {"/api/products/{id}"}, method DELETE.
+	 * Deletes a specific product by its ID.
 	 *
-	 * @param id the product to be removed from the user shopping cart.
+	 * @param id The ID of the product to delete.
+	 * @return ResponseEntity with a success status if the product was deleted,
+	 *         or an error response if an exception occurs.
 	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") long id) {
 		try {
 			productRepository.deleteById(id);
-			return ResponseEntity.ok(HttpStatus.NO_CONTENT);
+			return ResponseEntity.noContent().build();
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.internalServerError().build();
 		}
 	}
 
 	/**
-	 * Remove ALL products from web_shop.
-	 * URL request {"/api/products"}, method DELETE.
-	 * deleteAll() all products delete
-	 * 
-	 * @param id the product to be removed from the user shopping cart.
+	 * Deletes all products.
+	 *
+	 * @return ResponseEntity with a success status if all products were deleted,
+	 *         or an error response if an exception occurs.
 	 */
 	@DeleteMapping("")
 	public ResponseEntity<HttpStatus> deleteAllProducts() {
 		try {
 			productRepository.deleteAll();
-			return ResponseEntity.ok(HttpStatus.NO_CONTENT);
+			return ResponseEntity.noContent().build();
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.internalServerError().build();
 		}
-
 	}
 
+	/**
+	 * Retrieves all published products.
+	 *
+	 * @return ResponseEntity with a list of published products if successful,
+	 *         or an error response if an exception occurs.
+	 */
 	@GetMapping("/published")
 	public ResponseEntity<List<Product>> findByPublished() {
 		try {
-			List<Product> products = productRepository.findByPublished(true);
+			List<Product> publishedProducts = productRepository.findByPublished(true);
 
-			if (products.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			if (publishedProducts.isEmpty()) {
+				return ResponseEntity.noContent().build();
 			}
-			return ResponseEntity.ok(products);
+
+			return ResponseEntity.ok(publishedProducts);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.internalServerError().build();
 		}
 	}
-
 }
