@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import ch.web.web_shop.controller.ProductController;
 import ch.web.web_shop.repository.CategoryRepository;
-import ch.web.web_shop.repository.NewslatterRepository;
+import ch.web.web_shop.repository.NewsletterRepository;
 import ch.web.web_shop.repository.ProductRepository;
 
 @ExtendWith(SpringExtension.class)
@@ -27,7 +27,7 @@ import ch.web.web_shop.repository.ProductRepository;
 public class ProductControllerTest {
 
 	@MockBean
-	private NewslatterRepository newslatterRepository;
+	private NewsletterRepository newsletterRepository;
 	@MockBean
 	private ProductRepository prpductRepository;
 	@MockBean
