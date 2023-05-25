@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.web.web_shop.model.Newslatter;
+import ch.web.web_shop.model.Newsletter;
 import ch.web.web_shop.repository.NewsletterRepository;
 
 /**
@@ -25,7 +25,7 @@ import ch.web.web_shop.repository.NewsletterRepository;
  *
  * @author Sy Viet
  * @version 1.0
- * @see Newslatter
+ * @see Newsletter
  */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -42,7 +42,7 @@ public class NewsletterController {
 	 * @return The created newslatter object.
 	 */
 	@PostMapping("")
-	public Newslatter createNewslatter(@Valid @RequestBody Newslatter newsletter) {
+	public Newsletter createNewslatter(@Valid @RequestBody Newsletter newsletter) {
 		return newsletterRepository.save(newsletter);
 	}
 }

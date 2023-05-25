@@ -1,9 +1,9 @@
 package ch.web.web_shop.service;
 
+import ch.web.web_shop.model.Newsletter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ch.web.web_shop.model.Newslatter;
 import ch.web.web_shop.repository.NewsletterRepository;
 
 /**
@@ -17,7 +17,7 @@ import ch.web.web_shop.repository.NewsletterRepository;
  *
  * @author Sy Viet
  * @version 1.0
- * @see Newslatter
+ * @see Newsletter
  * @see NewsletterRepository
  */
 @Service
@@ -32,7 +32,7 @@ public class NewsletterService {
      * @param newsletter The newsletter object to be created.
      * @return The created newsletter object.
      */
-    public Newslatter createNewsletter(Newslatter newsletter) {
+    public Newsletter createNewsletter(Newsletter newsletter) {
         return newsletterRepository.save(newsletter);
     }
 }
