@@ -38,11 +38,11 @@ public class NewsletterController {
 	/**
 	 * Creates a newslatter.
 	 *
-	 * @param newslatter The newslatter object to be created.
+	 * @param newsletter The newslatter object to be created.
 	 * @return The created newslatter object.
 	 */
 	@PostMapping("")
-	public Newslatter createNewslatter(@Valid @RequestBody Newslatter newslatter) {
-		return newsletterRepository.save(newslatter);
+	public Newslatter createNewslatter(@Valid @RequestBody Newslatter newsletter) {
+		return newsletterRepository.save(newsletter);
 	}
 }
