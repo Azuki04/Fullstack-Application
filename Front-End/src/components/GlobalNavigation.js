@@ -2,6 +2,7 @@ import React from "react";
 import Menu from "./svg/bars-solid.svg";
 import Close from "./svg/times-solid.svg";
 import CartIcon from "./svg/shopping-cart-solid.svg";
+import User from "./svg/user.svg";
 import { Link } from "react-router-dom";
 import "./css/GlobalNavigation.css";
 
@@ -47,6 +48,11 @@ class GlobalNavigation extends React.Component {
               <img src={Close} alt="" width="20" />
             </li>
           </ul>
+          <div className="nav-user">
+            <Link to="/user/1">
+              <img src={User} alt="user" width="25" />
+            </Link>
+          </div>
           <div className="nav-cart">
             <span>0</span>
             <Link to="/cart">

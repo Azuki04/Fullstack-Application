@@ -29,6 +29,13 @@ nav ul li a:hover{
 nav .nav-cart{
     cursor: pointer;
     position: relative;
+    margin-top: 5px;
+}
+nav .nav-user{
+    cursor: pointer;
+    position: relative;
+    margin-right: 15px;
+    margin-left: 20px;
 }
 nav .nav-cart span{
     position: absolute;

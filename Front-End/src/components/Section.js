@@ -10,6 +10,7 @@ import AboutUs from "./Page/AboutUs";
 import Cart from "./Page/Cart";
 import Home from "./Page/Home";
 import Payment from "./Page/Payment";
+import UserProfil from "./Page/UserProfil";
 
 class Section extends React.Component {
   render() {
@@ -25,6 +26,7 @@ class Section extends React.Component {
             <Route path="payment" element={<Payment />} />
             <Route path="add" element={<AddProduct />} />
             <Route path="about" element={<AboutUs />} />
+            <Route path="user/:id" element={<UserProfil />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
