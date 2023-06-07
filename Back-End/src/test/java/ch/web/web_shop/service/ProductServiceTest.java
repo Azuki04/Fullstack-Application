@@ -6,10 +6,12 @@ import ch.web.web_shop.exception.ProductLoadException;
 import ch.web.web_shop.exception.ProductNotFoundException;
 import ch.web.web_shop.model.Product;
 import ch.web.web_shop.repository.ProductRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -189,6 +191,42 @@ public class ProductServiceTest {
         assertThrows(ProductLoadException.class, () -> {
             productService.getPublishedProducts();
         });
+    }
+
+    @Test
+    public void testGetAllProducts() {
+        // Prepare test data
+        List<Product> products = new ArrayList<>();
+        products.add(new Product());
+        products.add(new Product());
+
+        // Configure mock repository
+        Mockito.when(productRepository.findAll()).thenReturn(products);
+
+        // Call the service method
+        List<Product> result = productService.getAllProducts(null);
+
+        // Verify the result
+        Assertions.assertEquals(products, result);
+        Mockito.verify(productRepository).findAll();
+    }
+
+    @Test
+    public void testGetProductById() {
+        // Prepare test data
+        long productId = 1L;
+        Product product = new Product();
+        product.setId(productId);
+
+        // Configure mock repository
+        Mockito.when(productRepository.findById(productId)).thenReturn(Optional.of(product));
+
+        // Call the service method
+        Product result = productService.getProductById(productId);
+
+        // Verify the result
+        Assertions.assertEquals(product, result);
+        Mockito.verify(productRepository).findById(productId);
     }
 
 }
