@@ -30,7 +30,7 @@ class GlobalNavigation extends React.Component {
         <nav>
           <ul className={toggle ? "toggle" : ""}>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/home">Home</Link>
             </li>
             <li>
               <Link to="/products">my_Products</Link>

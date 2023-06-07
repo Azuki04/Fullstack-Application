@@ -50,7 +50,7 @@ class UserProfil extends React.Component {
                             Subscribe: {currentUser.subscribed ? "Yes" : "No"}
                         </span>
                     </div>
-                    <Link to="/login" className="logout">
+                    <Link to="/" className="logout">
                         Logout
                     </Link>
                 </div>

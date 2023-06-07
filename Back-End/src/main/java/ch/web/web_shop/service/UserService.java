@@ -31,12 +31,12 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
 
-        // Hier kannst du weitere Aktionen durchführen, z.B. JWT-Token generieren
-        // und an den Client senden
+        // ID des eingeloggten Benutzers abrufen und in einen Text umwandeln
+        String userId = String.valueOf(existingUser.getId());
 
-        return ResponseEntity.ok("Login successful");
+        // ID zusammen mit der Erfolgsmeldung zurückgeben
+        return ResponseEntity.ok(userId);
     }
-
     public ResponseEntity<User> getUserDetails(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
