@@ -2,7 +2,7 @@
 package ch.web.web_shop.exception;
 
 public class ProductLoadException extends RuntimeException {
-	public ProductLoadException(String productLoadFailed) {
+	public ProductLoadException() {
 		super("Products could not be loaded.");
 	}
 
