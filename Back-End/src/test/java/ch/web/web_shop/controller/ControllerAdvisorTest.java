@@ -1,4 +1,4 @@
-package ch.web.web_shop.service;
+package ch.web.web_shop.controller;
 
 import ch.web.web_shop.exception.*;
 import org.junit.jupiter.api.Test;

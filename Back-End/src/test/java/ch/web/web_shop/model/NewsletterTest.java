@@ -1,4 +1,4 @@
-package ch.web.web_shop.service;
+package ch.web.web_shop.model;
 
 import ch.web.web_shop.model.Newsletter;
 import org.junit.jupiter.api.Assertions;

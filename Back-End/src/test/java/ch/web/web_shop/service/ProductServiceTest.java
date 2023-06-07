@@ -6,6 +6,7 @@ import ch.web.web_shop.exception.ProductLoadException;
 import ch.web.web_shop.exception.ProductNotFoundException;
 import ch.web.web_shop.model.Product;
 import ch.web.web_shop.repository.ProductRepository;
+import ch.web.web_shop.service.ProductService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

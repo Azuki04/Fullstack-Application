@@ -1,6 +1,7 @@
-package ch.web.web_shop.service;
+package ch.web.web_shop.controller;
 import ch.web.web_shop.controller.ProductController;
 import ch.web.web_shop.model.Product;
+import ch.web.web_shop.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

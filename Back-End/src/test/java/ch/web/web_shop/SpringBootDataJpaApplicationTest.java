@@ -1,4 +1,4 @@
-package ch.web.web_shop.service;
+package ch.web.web_shop;
 
 import ch.web.web_shop.SpringBootDataJpaApplication;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package ch.web.web_shop.service;
+package ch.web.web_shop.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

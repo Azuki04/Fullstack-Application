@@ -2,6 +2,7 @@ package ch.web.web_shop.service;
 
 import ch.web.web_shop.model.Newsletter;
 import ch.web.web_shop.repository.NewsletterRepository;
+import ch.web.web_shop.service.NewsletterService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
